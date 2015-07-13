@@ -22,5 +22,9 @@ class Project
     @description = values["description"]
   end
   
+  def as_hash
+    {"id" => @id, "name" => @name, "description" => @description}
+  end
+  
   
 end
