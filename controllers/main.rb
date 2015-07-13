@@ -26,13 +26,30 @@ get "/add_do" do
   erb :home
 end
 
+get "/list" do
+  erb :list
+end
+
+get "/single" do 
+  erb :single
+end
+
 get "/delete" do
   
   erb :delete 
 end
 
 get "/delete_do" do
-  
+  project = Project.find(params["project"]["id"])
+  links = Link.where("project_id", params["project"]["id"])
+  links.each do |link|
+    link.delete
+  end
+  members = Member.where("project_id", params["project"]["id"])
+  members.each do |member|
+    member.delete
+  end
+  project.delete
   erb :home
 end
 

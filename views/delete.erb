@@ -1,0 +1,10 @@
+<h1>Please select a project to delete.</h1>
+
+<form action="/delete_do">
+  <select name ="project[id]">
+    <% Project.all.each do |Project| %> 
+      <option value="<%= project.id %>"><%= project.name %></option>
+    <% end %>
+  </select>
+  <input type='submit'>
+</form>
