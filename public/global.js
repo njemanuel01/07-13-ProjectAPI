@@ -2,8 +2,13 @@ var all_projects = function () {
   var req = new XMLHttpRequest();
 
   req.open("get", "/projects");
+  
+  req.addEventListener("load", function () {
+    alert(req.response);
+  })
 
   req.send();
+  
 
 }
 

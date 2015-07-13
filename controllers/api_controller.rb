@@ -1,5 +1,5 @@
 get "/projects" do
-  projects = Projects.all
+  projects = Project.all
   
   json projects
 end

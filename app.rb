@@ -1,5 +1,6 @@
 require "pry"
 require "sinatra"
+require "sinatra/json"
 require "sinatra/reloader"
 
 # SQL/Database
