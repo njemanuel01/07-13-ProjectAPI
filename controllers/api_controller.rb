@@ -1,9 +1,5 @@
 get "/projects" do
+  projects = Projects.all
   
-  erb :projects
-end
-
-get "/projects/:id" do
-  
-  erb :project
+  json projects
 end

@@ -30,10 +30,6 @@ get "/list" do
   erb :list
 end
 
-get "/single" do 
-  erb :single
-end
-
 get "/delete" do
   
   erb :delete 
