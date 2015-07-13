@@ -59,6 +59,13 @@ get "/update" do
 end
 
 get "/update_do" do
-  
+  project = Project.find(params["project"]["id"])
+  if params["project"]["name"] != ""
+    project.name = params["project"]["name"]
+  end
+  if params["project"]["description"] != ""
+    project.name = params["project"]["description"]
+  end
+  project.save
   erb :home
 end

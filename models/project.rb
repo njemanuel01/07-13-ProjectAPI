@@ -5,7 +5,8 @@ class Project
   extend DatabaseClassMethod
   include DatabaseInstanceMethod
   
-  attr_reader :id, :name, :description
+  attr_reader :id
+  attr_accessor :name, :description
   
   # Creates a new instance of the Project class.
   #

@@ -5,7 +5,8 @@ class Member
   extend DatabaseClassMethod
   include DatabaseInstanceMethod
   
-  attr_reader :id, :name, :project_id
+  attr_reader :id, :project_id
+  attr_accessor :name
   
   # Creates a new instance of the Member class.
   #

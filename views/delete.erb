@@ -2,7 +2,7 @@
 
 <form action="/delete_do">
   <select name ="project[id]">
-    <% Project.all.each do |Project| %> 
+    <% Project.all.each do |project| %> 
       <option value="<%= project.id %>"><%= project.name %></option>
     <% end %>
   </select>

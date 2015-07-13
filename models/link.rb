@@ -5,7 +5,8 @@ class Link
   extend DatabaseClassMethod
   include DatabaseInstanceMethod
   
-  attr_reader :id, :link, :project_id
+  attr_reader :id, :project_id
+  attr_accessor :link 
   
   # Creates a new instance of the Link class.
   #
