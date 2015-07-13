@@ -21,5 +21,9 @@ class Link
     @link = values["link"]
     @project_id = values["project_id"]
   end
+  
+  def as_hash
+    {"id" => @id, "link" => @link, "project_id" => @project_id}
+  end
    
 end

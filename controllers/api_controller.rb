@@ -8,9 +8,18 @@ get "/projects" do
 end
 
 get "/project/:id" do
+  links_array = []
+  members_array = []
   project = Project.find(params["id"])
-  links = Link.where("project_id", params["project"]["id"])
-  members = Member.where("project_id", params["project"]["id"])
+  links = Link.where("project_id", params["id"])
+  links.each do |link|
+    links_array << link.as_hash
+  end
+  members = Member.where("project_id", params["id"])
+  members.each do |member|
+    members_array << member.as_hash
+  end
   
-  json [project, links, members]
+  x = [project.as_hash, {"links" => links_array}, {"members" => members_array}]
+  json x
 end

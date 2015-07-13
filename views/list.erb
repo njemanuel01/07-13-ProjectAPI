@@ -2,7 +2,7 @@
 <button id="all_projects">All Projects</button>
 
 <h1>Get information on a single project</h1>
-<select>
+<select id="id">
   <% Project.all.each do |project| %> 
     <option><%=project.id%> - <%= project.name %></option>
   <% end %>

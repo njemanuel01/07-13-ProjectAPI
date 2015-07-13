@@ -16,12 +16,12 @@ var all_projects = function() {
 
 var single_project = function() {
   var req = new XMLHttpRequest();
-  var id = document.getElementById("id").value;
+  var id = document.getElementById("id").value.charAt(0);
   
   req.open("get", "/project/" + id);
 
   req.addEventListener("load", function() {
-    document.getElementById("project").innerHTML = req.response;
+    document.getElementById("content").innerHTML = "Name: " + req.response[0].name;
   })
 
   req.responseType = "json";

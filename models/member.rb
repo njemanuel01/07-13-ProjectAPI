@@ -22,5 +22,9 @@ class Member
     @project_id = values["project_id"]
   end
   
+  def as_hash
+    {"id" => @id, "name" => @name, "project_id" => @project_id}
+  end
+  
   
 end
