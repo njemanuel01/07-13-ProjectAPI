@@ -61,6 +61,51 @@ var single_project = function() {
 
 }
 
+var all_links = function() {
+  var req = new XMLHttpRequest();
+  var names = [];
+
+  req.open("get", "http://localhost:4567/links/");
+
+  req.addEventListener("load", function() {
+    var ul = document.getElementById("links_all");
+    for (var i = 0; i < req.response.length; i++) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.setAttribute("href", req.response[i].link);
+      a.appendChild(document.createTextNode(req.response[i].link));
+      li.appendChild(a);
+      ul.appendChild(li); 
+    }
+  })
+
+  req.responseType = "json";
+  req.send();
+}
+
+var all_members = function() {
+  var req = new XMLHttpRequest();
+
+  req.open("get", "http://localhost:4567/members/");
+
+  req.addEventListener("load", function() {
+    var ul = document.getElementById("members_all");
+    for (var i = 0; i < req.response.length; i++) {
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode("Co-Worker: " + req.response[i].name));
+      ul.appendChild(li); 
+    }
+  })
+
+  req.responseType = "json";
+  req.send();
+}
+
+window.onload = function() {
+  document.getElementById("all_links").addEventListener("click", all_links);
+  document.getElementById("all_members").addEventListener("click", all_members);
+}
+
 
 
 
