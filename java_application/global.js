@@ -101,9 +101,27 @@ var all_members = function() {
   req.send();
 }
 
+var delete_project = function() {
+  var req = new XMLHttpRequest();
+  var id = document.getElementById("delete_id").value.charAt(0);
+  var links = [];
+  var members = [];
+  
+  req.open("get", "http://localhost:4567/projects/delete/" + id);
+
+  req.addEventListener("load", function() {
+    document.getElementById("delete_text").innerHTML = (req.name + "DELETED");
+  })
+
+  req.responseType = "json";
+  req.send();
+
+}
+
 window.onload = function() {
   document.getElementById("all_links").addEventListener("click", all_links);
   document.getElementById("all_members").addEventListener("click", all_members);
+  document.getElementById("delete_project").addEventListener("click", delete_project);
 }
 
 
