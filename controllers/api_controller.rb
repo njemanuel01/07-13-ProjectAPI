@@ -33,3 +33,12 @@ get "/links" do
   json array
 end
 
+get "/members" do
+  members = Member.all
+  array = []
+  members.each do |member|
+    array << member.as_hash
+  end
+  json array
+end
+
