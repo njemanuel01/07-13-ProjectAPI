@@ -23,3 +23,13 @@ get "/project/:id" do
   x = [project.as_hash, {"links" => links_array}, {"members" => members_array}]
   json x
 end
+
+get "/links" do
+  links = Link.all
+  array = []
+  links.each do |link|
+    array << link.as_hash
+  end
+  json array
+end
+

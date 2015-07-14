@@ -17,6 +17,24 @@ var all_projects = function() {
 
 }
 
+var all_links = function() {
+  var req = new XMLHttpRequest();
+  var names = [];
+
+  req.open("get", "/links");
+
+  req.addEventListener("load", function() {
+    for (var i = 0; i < req.response.length; i++) {
+      names[i] = "Link: " + req.response[i].link; + ", ";
+    }
+    
+    document.getElementById("content").innerHTML = names.toString();
+  })
+
+  req.responseType = "json";
+  req.send();
+}
+
 var single_project = function() {
   var req = new XMLHttpRequest();
   var id = document.getElementById("id").value.charAt(0);
@@ -44,6 +62,8 @@ var single_project = function() {
 
 window.onload = function() {
   document.getElementById("all_projects").addEventListener("click", all_projects);
+  document.getElementById("all_links").addEventListener("click", all_links);
   document.getElementById("single_project").addEventListener("click", single_project);
+  
 }
 
