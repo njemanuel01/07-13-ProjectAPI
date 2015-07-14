@@ -11,8 +11,11 @@ req.addEventListener("load", function() {
 req.responseType = "json";
 req.send();
 
-function list_projects()
-{
+function list_projects() {
+  var ul = document.getElementById("all_assignments");
+  reset_ul(ul);
+  var select = document.getElementById("delete_id");
+  reset_select(select);
   for (var i = 0; i < req.response.length; i++) {
     add_list_item_to_projects(req.response[i].id, req.response[i].name);
     add_item_to_select(req.response[i].id, req.response[i].name);
@@ -35,6 +38,12 @@ function add_item_to_select(id, name) {
   var select = document.getElementById("delete_id");
   option.appendChild(document.createTextNode(id + "-" + name))
   select.appendChild(option);
+}
+
+function reset_select(select) {
+  while (select.firstChild) {
+      select.removeChild(select.firstChild);
+  }
 }
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -140,6 +149,8 @@ var delete_project = function() {
   req.addEventListener("load", function() {
     document.getElementById("delete_text").innerHTML = (req.response.name + " DELETED");
   })
+  
+  list_projects();
 
   req.responseType = "json";
   req.send();
@@ -162,12 +173,19 @@ var add_project = function() {
 
   req.addEventListener("load", function() {
     document.getElementById("added_text").innerHTML = (req.response.name + " ADDED");
+    add_list_item_to_projects(req.response.id, req.response.name);
+    add_item_to_select(req.response.id, req.response.name);
+    document.getElementById("project_name").value = "";
+    document.getElementById("project_description").value = "";
+    document.getElementById("project_link1").value = "";
+    document.getElementById("project_link2").value = "";
+    document.getElementById("project_link3").value = "";
+    document.getElementById("project_member1").value = "";
+    document.getElementById("project_member2").value = "";
   })
 
   req.responseType = "json";
-  req.send();
-  
-  
+  req.send(); 
 }
 
 window.onload = function() {
