@@ -7,7 +7,7 @@ get "/projects" do
   json array
 end
 
-get "/project/:id" do
+get "/projects/:id" do
   links_array = []
   members_array = []
   project = Project.find(params["id"])
@@ -20,7 +20,9 @@ get "/project/:id" do
     members_array << member.as_hash
   end
   
-  x = [project.as_hash, {"links" => links_array}, {"members" => members_array}]
+  x = project.as_hash
+  x["links"] = links_array
+  x["members"] = members_array
   json x
 end
 
