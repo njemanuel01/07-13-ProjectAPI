@@ -4,9 +4,7 @@ var req = new XMLHttpRequest();
 
 req.open("get", "http://localhost:4567/projects");
 
-req.addEventListener("load", function() {
-  list_projects();
-})
+req.addEventListener("load", list_projects);
 
 req.responseType = "json";
 req.send();
@@ -17,25 +15,29 @@ function list_projects() {
   var select = document.getElementById("delete_id");
   reset_select(select);
   for (var i = 0; i < req.response.length; i++) {
-    add_list_item_to_projects(req.response[i].id, req.response[i].name);
-    add_item_to_select(req.response[i].id, req.response[i].name);
+    add_link_item_to_list(ul, req.response[i].id, req.response[i].name);
+    add_item_to_select(select, req.response[i].id, req.response[i].name);
   }
 }
 
-function add_list_item_to_projects(id, name) {
-  var ul = document.getElementById("all_assignments");
+function add_link_item_to_list(ul, id, name) {
   var li = document.createElement("li");
-  var a = document.createElement("a");
-  a.setAttribute("href", ("http://localhost:4567/projects/" + id));
-  a.addEventListener("click", single_project)
-  a.appendChild(document.createTextNode("Project Name: " + name));
+  var a = make_project_link(id, name);
   li.appendChild(a);
   ul.appendChild(li);
 }
 
-function add_item_to_select(id, name) {
+function make_project_link(id, name) {
+  var a = document.createElement("a");
+  a.setAttribute("href", ("http://localhost:4567/projects/" + id));
+  a.addEventListener("click", single_project)
+  a.appendChild(document.createTextNode("Project Name: " + name));
+  
+  return a;
+}
+
+function add_item_to_select(select, id, name) {
   var option = document.createElement("option");
-  var select = document.getElementById("delete_id");
   option.appendChild(document.createTextNode(id + "-" + name))
   select.appendChild(option);
 }
@@ -43,6 +45,12 @@ function add_item_to_select(id, name) {
 function reset_select(select) {
   while (select.firstChild) {
       select.removeChild(select.firstChild);
+  }
+}
+
+function reset_ul(ul) {
+  while (ul.firstChild) {
+      ul.removeChild(ul.firstChild);
   }
 }
 ///////////////////////////////////////////////////////////////////////////////////
@@ -84,11 +92,6 @@ var single_project = function() {
 
 }
 
-function reset_ul(ul) {
-  while (ul.firstChild) {
-      ul.removeChild(ul.firstChild);
-  }
-}
 ////////////////////////////////////////////////////////////////////////////////
 
 //Display all links in the database
@@ -138,6 +141,8 @@ var all_members = function() {
 }
 ///////////////////////////////////////////////////////////////////////////
 
+//Deletes a project
+//////////////////////////////////////////////////////////////////////////
 var delete_project = function() {
   var req = new XMLHttpRequest();
   var id = document.getElementById("delete_id").value.charAt(0);
@@ -156,7 +161,10 @@ var delete_project = function() {
   req.send();
 
 }
+/////////////////////////////////////////////////////////////////////////
 
+//Adds a project
+////////////////////////////////////////////////////////////////////////
 var add_project = function() {
   var req = new XMLHttpRequest();
   var name = document.getElementById("project_name").value;
@@ -187,13 +195,17 @@ var add_project = function() {
   req.responseType = "json";
   req.send(); 
 }
+/////////////////////////////////////////////////////////////////////
 
+//Sets event actions
+/////////////////////////////////////////////////////////////////////
 window.onload = function() {
   document.getElementById("all_links").addEventListener("click", all_links);
   document.getElementById("all_members").addEventListener("click", all_members);
   document.getElementById("delete_project").addEventListener("click", delete_project);
   document.getElementById("add_project").addEventListener("click", add_project);
 }
+//////////////////////////////////////////////////////////////////////
 
 
 
