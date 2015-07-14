@@ -1,5 +1,6 @@
+//Adds list of projects at page load
+/////////////////////////////////////////////////////////////////////////////////
 var req = new XMLHttpRequest();
-var names = [];
 
 req.open("get", "http://localhost:4567/projects");
 
@@ -12,22 +13,33 @@ req.send();
 
 function list_projects()
 {
-  var ul = document.getElementById("all_assignments");
   for (var i = 0; i < req.response.length; i++) {
-    var li = document.createElement("li");
-    var a = document.createElement("a");
-    a.setAttribute("href", ("http://localhost:4567/projects/" + req.response[i].id));
-    a.addEventListener("click", single_project)
-    a.appendChild(document.createTextNode("Project Name: " + req.response[i].name));
-    li.appendChild(a);
-    ul.appendChild(li);
-    var option = document.createElement("option");
-    var select = document.getElementById("delete_id");
-    option.appendChild(document.createTextNode(req.response[i].id + "-" + req.response[i].name))
-    select.appendChild(option);
+    add_list_item_to_projects(req.response[i].id, req.response[i].name);
+    add_item_to_select(req.response[i].id, req.response[i].name);
   }
 }
 
+function add_list_item_to_projects(id, name) {
+  var ul = document.getElementById("all_assignments");
+  var li = document.createElement("li");
+  var a = document.createElement("a");
+  a.setAttribute("href", ("http://localhost:4567/projects/" + id));
+  a.addEventListener("click", single_project)
+  a.appendChild(document.createTextNode("Project Name: " + name));
+  li.appendChild(a);
+  ul.appendChild(li);
+}
+
+function add_item_to_select(id, name) {
+  var option = document.createElement("option");
+  var select = document.getElementById("delete_id");
+  option.appendChild(document.createTextNode(id + "-" + name))
+  select.appendChild(option);
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+//Displays information on a singe project
+//////////////////////////////////////////////////////////////////////////////////
 var single_project = function() {
   var req = new XMLHttpRequest();
   
@@ -36,10 +48,9 @@ var single_project = function() {
   req.addEventListener("load", function() {
     document.getElementById("title").innerHTML = req.response.name;
     document.getElementById("description").innerHTML = req.response.description;
+    
     var ul = document.getElementById("links");
-    while (ul.firstChild) {
-        ul.removeChild(ul.firstChild);
-    }
+    reset_ul(ul);
     for (var i = 0; i < req.response.links.length; i++) {
       var li = document.createElement("li");
       var a = document.createElement("a");
@@ -48,10 +59,9 @@ var single_project = function() {
       li.appendChild(a);
       ul.appendChild(li); 
     }
+    
     var ul = document.getElementById("co-workers");
-    while (ul.firstChild) {
-        ul.removeChild(ul.firstChild);
-    }
+    reset_ul(ul);
     for (var i = 0; i < req.response.members.length; i++) {
       var li = document.createElement("li");
       li.appendChild(document.createTextNode("Co-Worker: " + req.response.members[i].name));
@@ -65,6 +75,15 @@ var single_project = function() {
 
 }
 
+function reset_ul(ul) {
+  while (ul.firstChild) {
+      ul.removeChild(ul.firstChild);
+  }
+}
+////////////////////////////////////////////////////////////////////////////////
+
+//Display all links in the database
+////////////////////////////////////////////////////////////////////////////////
 var all_links = function() {
   var req = new XMLHttpRequest();
   var names = [];
@@ -86,7 +105,11 @@ var all_links = function() {
   req.responseType = "json";
   req.send();
 }
+//////////////////////////////////////////////////////////////////////////
 
+
+//Displays all members
+//////////////////////////////////////////////////////////////////////////
 var all_members = function() {
   var req = new XMLHttpRequest();
 
@@ -104,6 +127,7 @@ var all_members = function() {
   req.responseType = "json";
   req.send();
 }
+///////////////////////////////////////////////////////////////////////////
 
 var delete_project = function() {
   var req = new XMLHttpRequest();
@@ -142,6 +166,8 @@ var add_project = function() {
 
   req.responseType = "json";
   req.send();
+  
+  
 }
 
 window.onload = function() {
