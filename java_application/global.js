@@ -65,7 +65,7 @@ var all_links = function() {
   var req = new XMLHttpRequest();
   var names = [];
 
-  req.open("get", "http://localhost:4567/links/");
+  req.open("get", "http://localhost:4567/links");
 
   req.addEventListener("load", function() {
     var ul = document.getElementById("links_all");
@@ -86,7 +86,7 @@ var all_links = function() {
 var all_members = function() {
   var req = new XMLHttpRequest();
 
-  req.open("get", "http://localhost:4567/members/");
+  req.open("get", "http://localhost:4567/members");
 
   req.addEventListener("load", function() {
     var ul = document.getElementById("members_all");

@@ -44,3 +44,49 @@ get "/members" do
   json array
 end
 
+get "/projects/add" do
+  project = Project.add({"name" => params["name"], "description" => params["description"]})
+  hash = project.as_hash
+  links = []
+  members = []
+  if params["link1"] != ""
+    link = Link.add({"link" => params["link1"], "project_id" => project.id})
+    links << link.as_hash
+  end
+  if params["link2"] != ""
+    link = Link.add({"link" => params["link2"], "project_id" => project.id})
+    links << link.as_hash
+  end
+  if params["link3"] != ""
+    link = Link.add({"link" => params["link3"], "project_id" => project.id})
+    links << link.as_hash
+  end
+  if params["member1"] != ""
+    member = Member.add({"name" => params["member1"], "project_id" => project.id})
+    members << member.as_hash
+  end
+  if params["member2"] != ""
+    member = Member.add({"name" => params["member2"], "project_id" => project.id})
+    members << member.as_hash
+  end
+  
+  hash["links"] = links
+  hash["members"] = members
+  json hash
+end
+
+get "projects/delete/:id" do
+  project = Project.find(params["id"])
+  hash = project.as_hash
+  links = Link.where("project_id", params["project"]["id"])
+  links.each do |link|
+    link.delete
+  end
+  members = Member.where("project_id", params["project"]["id"])
+  members.each do |member|
+    member.delete
+  end
+  project.delete
+  json hash
+end
+
