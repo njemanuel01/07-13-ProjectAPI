@@ -21,6 +21,10 @@ function list_projects()
     a.appendChild(document.createTextNode("Project Name: " + req.response[i].name));
     li.appendChild(a);
     ul.appendChild(li);
+    var option = document.createElement("option");
+    var select = document.getElementById("delete_id");
+    option.appendChild(document.createTextNode(req.response[i].id + "-" + req.response[i].name))
+    select.appendChild(option);
   }
 }
 
@@ -110,7 +114,7 @@ var delete_project = function() {
   req.open("get", "http://localhost:4567/projects/delete/" + id);
 
   req.addEventListener("load", function() {
-    document.getElementById("delete_text").innerHTML = (req.name + "DELETED");
+    document.getElementById("delete_text").innerHTML = (req.response.name + " DELETED");
   })
 
   req.responseType = "json";
@@ -118,10 +122,33 @@ var delete_project = function() {
 
 }
 
+var add_project = function() {
+  var req = new XMLHttpRequest();
+  var name = document.getElementById("project_name").value;
+  var description = document.getElementById("project_description").value;
+  var link1 = document.getElementById("project_link1").value;
+  var link2 = document.getElementById("project_link2").value;
+  var link3 = document.getElementById("project_link3").value;
+  var member1 = document.getElementById("project_member1").value;
+  var member2 = document.getElementById("project_member2").value;
+  
+  var string = "http://localhost:4567/projects/add?name=" + name + "&description=" + description + "&link1=" + link1 + 
+  "&link2=" + link2 + "&link3=" + link3 + "&member1=" + member1 + "&member2=" + member2
+  req.open("get", string);
+
+  req.addEventListener("load", function() {
+    document.getElementById("added_text").innerHTML = (req.response.name + " ADDED");
+  })
+
+  req.responseType = "json";
+  req.send();
+}
+
 window.onload = function() {
   document.getElementById("all_links").addEventListener("click", all_links);
   document.getElementById("all_members").addEventListener("click", all_members);
   document.getElementById("delete_project").addEventListener("click", delete_project);
+  document.getElementById("add_project").addEventListener("click", add_project);
 }
 
 

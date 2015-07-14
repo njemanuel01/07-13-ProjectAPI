@@ -8,28 +8,27 @@ get "/projects" do
 end
 
 get "/projects/add" do
-  binding.pry
   project = Project.add({"name" => params["name"], "description" => params["description"]})
   hash = project.as_hash
   links = []
   members = []
-  if params["link1"] != nil
+  if params["link1"] != ""
     link = Link.add({"link" => params["link1"], "project_id" => project.id})
     links << link.as_hash
   end
-  if params["link2"] != nil
+  if params["link2"] != ""
     link = Link.add({"link" => params["link2"], "project_id" => project.id})
     links << link.as_hash
   end
-  if params["link3"] != nil
+  if params["link3"] != ""
     link = Link.add({"link" => params["link3"], "project_id" => project.id})
     links << link.as_hash
   end
-  if params["member1"] != nil
+  if params["member1"] != ""
     member = Member.add({"name" => params["member1"], "project_id" => project.id})
     members << member.as_hash
   end
-  if params["member2"] != nil
+  if params["member2"] != ""
     member = Member.add({"name" => params["member2"], "project_id" => project.id})
     members << member.as_hash
   end

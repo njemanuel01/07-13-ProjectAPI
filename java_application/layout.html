@@ -27,11 +27,19 @@
     <button id="all_members">All Co-Workers</button>
     <ul id="members_all"></ul>
     
+    <h1>Add a project</h1>
+    <input type="text" placeholder="Project Name" id="project_name"></br>
+    <input type="text" placeholder="Description" id="project_description"></br>
+    <input type="text" placeholder="Link 1" id="project_link1"></br>
+    <input type="text" placeholder="Link 2" id="project_link2"></br>
+    <input type="text" placeholder="Link 3" id="project_link3"></br>
+    <input type="text" placeholder="Co-Worker 1" id="project_member1"></br>
+    <input type="text" placeholder="Co-Worker 2" id="project_member2"></br>
+    <button id="add_project">Add Project</button>
+    <h1 id="added_text"></h1>
+    
     <h1>Delete a project</h1>
-    <select id="delete_id">
-      <% Project.all.each do |project| %> 
-        <option><%=project.id%> - <%= project.name %></option>
-      <% end %>
+    <select id="delete_id"> 
     </select>
     <h1 id="delete_text"></h1>
     <button id="delete_project">Delete</button>
